@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Recognition System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Upload an Image for Prediction</h1>
+        <form method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" required>
+            <button type="submit">Upload & Predict</button>
+        </form>
+
+        {% if predictions %}
+            <h2>Predictions:</h2>
+            <ul>
+            {% for cls, desc, prob in predictions %}
+                <li>{{ desc }} - {{ '%.2f'|format(prob*100) }}%</li>
+            {% endfor %}
+            </ul>
+            <img src="{{ url_for('static', filename='uploads/' + filename) }}" width="300">
+        {% endif %}
+    </div>
+</body>
+</html>
